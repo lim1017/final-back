@@ -45,6 +45,25 @@ function formatExpenses(data){
 
 module.exports = db => {
 
+
+  router.get("/expenses", (request, response) => {
+    db.query(
+      `
+      SELECT * from EXPENSES
+        
+    `
+    ).then(({ rows: appointments }) => {
+      response.json(
+        appointments.reduce(
+          (previous, current) => ({ ...previous, [current.id]: current }),
+          {}
+        )
+      );
+    });
+  });
+
+
+
   router.put("/expenses/add/", (request, response) => {
     if (process.env.TEST_ERROR) {
       setTimeout(() => response.status(500).json({}), 1000);
