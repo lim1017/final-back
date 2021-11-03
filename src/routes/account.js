@@ -1,12 +1,12 @@
 const router = require("express").Router();
 
-module.exports = db => {
+module.exports = (db) => {
   router.put("/account/register", (request, response) => {
+    res.header("Access-Control-Allow-Origin", "*");
     if (process.env.TEST_ERROR) {
       setTimeout(() => response.status(500).json({}), 1000);
       return;
     }
-
 
     const { username } = request.body;
 
@@ -19,12 +19,12 @@ module.exports = db => {
       `,
       [username]
     )
-      .then(x => {
+      .then((x) => {
         setTimeout(() => {
           response.status(204).json({ x });
         }, 1000);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         response.json({ error });
       });
@@ -36,7 +36,6 @@ module.exports = db => {
       return;
     }
 
-
     db.query(
       `
       SELECT * FROM users
@@ -47,7 +46,7 @@ module.exports = db => {
       .then(({ rows: user }) => {
         response.json(user);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   return router;
