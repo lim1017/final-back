@@ -43,7 +43,7 @@ module.exports = function application(
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
 
-    // next();
+    next();
   });
   app.use("/api", users(db));
   app.use("/api", expenses(db));
