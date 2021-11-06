@@ -2,7 +2,8 @@ const router = require("express").Router();
 
 module.exports = (db) => {
   router.put("/account/register", (request, response) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    console.log(`response: ${reponse}`);
+    response.header("Access-Control-Allow-Origin", "*");
     if (process.env.TEST_ERROR) {
       setTimeout(() => response.status(500).json({}), 1000);
       return;
