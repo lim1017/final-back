@@ -32,6 +32,5 @@ function updateAppointment(id, interview) {
 }
 
 server.listen(PORT, () => {
-  console.log(process.env);
   console.log(`Listening on port ${PORT} in ${ENV} mode.`);
 });

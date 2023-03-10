@@ -1,6 +1,13 @@
 const router = require("express").Router();
 
-module.exports = db => {
+module.exports = (db) => {
+  router.get("/users", (request, response) => {
+    db.query(`SELECT * FROM users`).then(({ rows: users }) => {
+      console.log(users, "**** USERS");
+      response.json(users);
+    });
+  });
+
   router.get("/users/:id", (request, response) => {
     db.query(
       `
@@ -29,12 +36,12 @@ module.exports = db => {
       `,
       [parseInt(userId), lit]
     )
-      .then(x => {
+      .then((x) => {
         setTimeout(() => {
           response.status(204).json({});
         }, 1000);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   router.put("/users/updateedu", (request, response) => {
@@ -53,12 +60,12 @@ module.exports = db => {
       `,
       [eduscores, parseInt(userId)]
     )
-      .then(x => {
+      .then((x) => {
         setTimeout(() => {
           response.status(204).json({});
         }, 1000);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   router.put("/users/update/newuser", (request, response) => {
@@ -77,12 +84,12 @@ module.exports = db => {
       `,
       [parseInt(userId)]
     )
-      .then(x => {
+      .then((x) => {
         setTimeout(() => {
           response.status(204).json({});
         }, 1000);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   router.put("/users/update", (request, response) => {
@@ -91,7 +98,6 @@ module.exports = db => {
       return;
     }
     const { user, riskScore, portfolioReturn } = request.body.userPortfolio;
-
 
     if (request.body.scoreUp) {
       score = 15;
@@ -106,7 +112,7 @@ module.exports = db => {
       `,
       [user, riskScore, portfolioReturn]
     )
-      .then(x => {
+      .then((x) => {
         db.query(
           `
           UPDATE users
@@ -115,12 +121,12 @@ module.exports = db => {
           `,
           [score, user]
         )
-          .then(x => {
+          .then((x) => {
             response.status(200).send(request.file);
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   router.get("/users/:username", (request, response) => {
@@ -139,7 +145,7 @@ module.exports = db => {
       .then(({ rows: user }) => {
         response.json(user);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 
   return router;
