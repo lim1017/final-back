@@ -36,15 +36,16 @@ module.exports = function application(
   actions = { updateAppointment: () => {} }
 ) {
   app.use(cors());
-  app.options("*", cors());
   app.use(helmet());
-  app.use(bodyparser.urlencoded({ extended: true }));
   app.use(bodyparser.json());
 
-  app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-  });
+  // app.options("*", cors());
+  // app.use(bodyparser.urlencoded({ extended: true }));
+
+  // app.use((req, res, next) => {
+  //   res.header("Access-Control-Allow-Origin", "*");
+  //   next();
+  // });
   app.use("/api", users(db));
   app.use("/api", expenses(db));
   app.use("/api", goals(db));
